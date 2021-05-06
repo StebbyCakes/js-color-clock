@@ -21,6 +21,7 @@ class DigitalClock {
     this.element.querySelector(".clock-display").textContent = timeFormatted;
 
     console.log(timeFormatted);
+
     console.log(newsec * 0.0167);
   }
 
@@ -53,6 +54,7 @@ var updateColor = (window.setInterval(function(){
   color();
 }, 1000))
 console.log(color());
+
 
 
 

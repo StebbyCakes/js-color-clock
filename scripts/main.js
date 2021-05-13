@@ -1,4 +1,5 @@
 $progressBar = document.querySelector('.clock-progress-bar');
+var isHovering = true;
 class DigitalClock {
   constructor(element) {
     this.element = element;
@@ -6,13 +7,13 @@ class DigitalClock {
 
   start() {
     this.update();
-
     setInterval(() => {
       this.update();
     }, 500);
   }
 
   update() {
+    if (isHovering === true){
     const parts = this.getTimeParts();
     const newsec = parts.seconds.toString().padStart(2, "0");
     const newmin = parts.minutes.toString().padStart(2, "0");
@@ -26,6 +27,10 @@ class DigitalClock {
     console.log(timeFormatted);
 
     console.log(newsec * 0.0167);
+  }
+  else {
+    this.element.querySelector(".clock-display").textContent = componentToHex(document.getElementsByClassName('clock-face')[0].style.backgroundColor);
+  }
   }
 
   getTimeParts() {
@@ -60,16 +65,32 @@ newColor = color();
 var updateColor = (window.setInterval(function() {
   color();
 }, 1000))
-console.log(color());
+// console.log(color());
 
+function componentToHex(c) {
+  var rgb = c;
 
+  rgb = rgb.substring(4, rgb.length-1)
+           .replace(/ /g, '')
+           .split(',');
+var red = parseInt(rgb[0]).toString(16);
+var blue = parseInt(rgb[1]).toString(16);
+var green = parseInt(rgb[2]).toString(16);
+  newColor = (`${red} : ${blue} : ${green}`)
+  return  newColor
+}
 
 
 let hover = document.getElementsByClassName(['clock-display'])[0];
 
-hover.addEventListener("mouseover", function(event) {
-  var newVar = document.getElementsByClassName('clock-face')[0];
-  event.target.innerText = newVar.style.backgroundColor.toString(16);
+hover.addEventListener("mouseenter", function(event) {
+  isHovering = false
+  console.log(componentToHex(newVar.style.backgroundColor))
+}, false);
+
+hover.addEventListener("mouseleave", function(event) {
+  isHovering = true
+  console.log(componentToHex(newVar.style.backgroundColor))
 }, false);
 
 
